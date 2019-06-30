@@ -1,0 +1,12 @@
+# Ignore node_modules
+node_modules
+package-lock.json
+
+# Ignore Mac DB
+.DS_store
+
+# Ignore Server.js
+Server.js
+
+# Ignore others folder
+others
