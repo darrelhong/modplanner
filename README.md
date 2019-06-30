@@ -6,7 +6,7 @@ Module Planner helps you easily plan your modules for each semester with a simpl
 # Demo
 ![enter image description here](https://media.giphy.com/media/cm56DtxRtY6b1s45Kx/giphy.gif)
 
-Visit [https://darrelhong.github.io](https://darrelhong.github.io) for live demo.
+Visit [https://darrelhong.github.io](https://darrelhong.github.io/modplanner/) for live demo.
 
 # Progress
 ### Milestone 1 Goals
@@ -67,5 +67,5 @@ Core modules will be automatically placed into most suitable semester.
 
 # Source code
 
-Source code available on [GitHub](https://github.com/darrelhong/darrelhong.github.io).
+Source code available on [GitHub](https://github.com/darrelhong/modplanner).
 
