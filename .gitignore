@@ -10,3 +10,4 @@ Server.js
 
 # Ignore others folder
 others
+.DS_Store
