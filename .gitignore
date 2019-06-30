@@ -3,7 +3,7 @@ node_modules
 package-lock.json
 
 # Ignore Mac DB
-.DS_store
+.DS_Store
 
 # Ignore Server.js
 Server.js
