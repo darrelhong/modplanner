@@ -1,0 +1,146 @@
+.container {
+  margin-top: 2em;
+  font-family: "Open Sans", sans-serif;
+  font-weight: 400;
+}
+
+.row {
+  margin-bottom: 1rem;
+}
+
+a:link {
+  color: black;
+}
+
+a:visited {
+  color: black;
+}
+
+#btn-group {
+  margin-bottom: 0rem;
+}
+
+.close {
+  -moz-transform: scale(0);
+  -webkit-transform: scale(0);
+  -o-transform: scale(0);
+  -ms-transform: scale(0);
+  transform: scale(0);
+  -webkit-transition: all 0.15s ease-out;
+  -moz-transition: all 0.15s ease-out;
+  -ms-transition: all 0.15s ease-out;
+  -o-transition: all 0.15s ease-out;
+  transition: all 0.15s ease-out;
+}
+
+.card {
+  border: transparent;
+  background-color: #f0f0f0;
+  border-radius: 5px;
+  padding-bottom: 10px;
+}
+.list-group {
+  min-height: 65px;
+}
+
+#buffer {
+  height: 18em;
+  overflow-y: auto;
+}
+
+.list-group-item {
+  border-style: solid !important;
+  border-width: thin !important;
+  border-radius: 3px;
+  margin: 10px;
+  /* -webkit-box-shadow: 0px 1px 3px 0 rgba(0, 0, 0, 0.2); */
+  /* box-shadow: 0px 1px 3px 0 rgba(0, 0, 0, 0.2); */
+  height: 3em;
+}
+
+.list-group-item.blue {
+  border-color: #38647C !important;
+  -webkit-box-shadow: 0px 3px 0px 0 #38647C;
+  box-shadow: 0px 3px 0px 0 #38647C;
+}
+.list-group-item.teal {
+  border-color: #2A9D8F !important;
+  -webkit-box-shadow: 0px 3px 0px 0 #2A9D8F;
+  box-shadow: 0px 3px 0px 0 #2A9D8F;
+}
+.list-group-item.yellow {
+  border-color: #E9C46A !important;
+  -webkit-box-shadow: 0px 3px 0px 0 #E9C46A;
+  box-shadow: 0px 3px 0px 0 #E9C46A;
+}
+.list-group-item.orange {
+  border-color: #F4A261 !important;
+  -webkit-box-shadow: 0px 3px 0px 0 #F4A261;
+  box-shadow: 0px 3px 0px 0 #F4A261;
+}
+.list-group-item.red {
+  border-color: #E76F51 !important;
+  -webkit-box-shadow: 0px 3px 0px 0 #E76F51;
+  box-shadow: 0px 3px 0px 0 #E76F51;
+}
+
+.list-group-item.error {
+  background-color: crimson !important;
+}
+
+.list-group-item:hover > .close {
+  -moz-transform: scale(1);
+  -webkit-transform: scale(1);
+  -o-transform: scale(1);
+  -ms-transform: scale(1);
+  transform: scale(1);
+}
+
+.list-group-item .text-muted {
+  position: absolute;
+  right: 2.8em;
+}
+
+strong {
+  font-weight: 600 !important;
+}
+
+.ghost {
+  opacity: 0.5;
+}
+
+#module-form {
+  margin-top: 8px;
+}
+
+#yr5 {
+  margin-top: 1.2em;
+}
+
+#add-year {
+  margin-left: 1em;
+}
+
+#buffer::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  background-color: #f5f5f5;
+}
+
+#buffer::-webkit-scrollbar {
+  width: 10px;
+  background-color: #f5f5f5;
+}
+
+#buffer::-webkit-scrollbar-thumb {
+  background-color: #f90;
+  background-image: -webkit-linear-gradient(
+    45deg,
+    rgba(255, 255, 255, 0.2) 25%,
+    transparent 25%,
+    transparent 50%,
+    rgba(255, 255, 255, 0.2) 50%,
+    rgba(255, 255, 255, 0.2) 75%,
+    transparent 75%,
+    transparent
+  );
+}
