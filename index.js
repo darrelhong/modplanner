@@ -235,6 +235,10 @@ moduleForm.addEventListener("submit", function(e) {
       </div>`;
         bufferEl.insertBefore(elChild, buffer.firstChild);
         document.querySelector("#module-code").value = "";
+        document.querySelector("#buffer").scrollTo({
+          top: 0,
+          behavior: 'smooth'
+        });
       });
   }
 });
