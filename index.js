@@ -1,5 +1,5 @@
 // Create sortable for each semester
-for (i = 1; i < 9; i++) {
+for (i = 1; i < 11; i++) {
   let el = document.getElementById("simpleList" + i);
   Sortable.create(el, {
     group: {
@@ -15,8 +15,13 @@ for (i = 1; i < 9; i++) {
     },
     animation: 150,
     ghostClass: "ghost",
-    onAdd: function(evt) {
-      handleAddEvent(evt.item);
+    onAdd: function(evt) {      
+      handleAddEvent(evt);
+    },
+    onRemove: function(evt) {
+      if (evt.to.id === 'buffer') {
+        evt.item.classList.remove('error');
+      }
     }
   });
 }
@@ -25,27 +30,38 @@ Sortable.create(buffer, {
   group: "shared",
   animation: 150,
   ghostClass: "ghost",
+  onRemove: function(evt) {
+    let moduleCode = evt.item.innerText.split(/\s/)[0];
+    sessionStorage.setItem(moduleCode, evt.to.id.substring(10));
+  },
   onAdd: function(evt) {
-    evt.item.classList.remove("error");
-    let modstr = evt.item.innerText.split(/\s/)[0];
-    removeModule(modstr);
-    console.log(activeModules);
-    recheckAll();
+    handleAddToBufferEvent(evt);
   }
 });
 
-function handleAddEvent(eventItem) {
-  let moduleStr = eventItem.innerText.split(/\s/)[0];
-  activeModules.push(moduleStr);
-  if (!prereqV2(moduleStr)) {
-    eventItem.classList.add("error");
+function handleAddEvent(evt) {
+  let id = evt.to.id.substring(10);
+  let moduleCode = evt.item.innerText.split(/\s/)[0];
+  sessionStorage.setItem(moduleCode, id);
+  activeModules.push(moduleCode);
+  if (!prereqV2(moduleCode)) {
+    evt.item.classList.add("error");
   }
   recheckAll();
   console.log(activeModules);
 }
+
+function handleAddToBufferEvent(evt) {
+  let moduleCode = evt.item.innerText.split(/\s/)[0];
+  sessionStorage.setItem(moduleCode, 'b');
+  removeModule(moduleCode);
+  console.log(activeModules);
+  evt.item.classList.remove("error");
+  recheckAll();
+}
+
 // Recheck prereq
 function recheckAll() {
-  console.log("recheck all");
   activeModules.forEach(activeMod => {
     if (!prereqV2(activeMod)) {
       document.querySelector(`#${activeMod}`).classList.add("error");
@@ -163,18 +179,20 @@ function generateCourseCards(array) {
       })
       .then(data => {
         let color = getRandomItem(colors);
+        let moduleCode = data.moduleCode;
         let card = `<div class="list-group-item ${color}" id="${
-          data.moduleCode
+          moduleCode
         }">
       <a href="https://nusmods.com/modules/${
-        data.moduleCode
-      }" target="_blank">${data.moduleCode}</a>
+        moduleCode
+      }" target="_blank">${moduleCode}<br><span class="title">${data.title}</span></a>
       <span class='text-muted'>${data.moduleCredit} MCs</span>
       <button type="button" class="close" aria-label="Close">
       <span aria-hidden="true">&times;</span>
       </button>
       </div>`;
         addToBuffer(card);
+        sessionStorage.setItem(moduleCode, 'b')
       });
   });
 }
@@ -280,43 +298,8 @@ btn2.addEventListener("click", function() {
 // Add year 5
 function addYear() {
   document.getElementById("add-year").remove();
-  let el = document.createElement("div");
-  let content = `
-    <div class="col-md-3" id="yr5">
-      <div class="card border-info mb-3 bg-light">
-        <div class="card-header bg-info">Year 5 Sem 1</div>
-        <div id="simpleList9" class="list-group"></div>
-       </div>
-    </div>
-    <div class="col-md-3" id="yr5">
-    <div class="card border-info mb-3 bg-light">
-      <div class="card-header bg-info">Year 5 Sem 2</div>
-      <div id="simpleList10" class="list-group"></div>
-    </div>
-  </div>`;
-  document.getElementById("collapse2").innerHTML += content;
-  for (i = 1; i < 11; i++) {
-    let str = "simpleList" + i;
-    let el = document.getElementById("simpleList" + i);
-    Sortable.create(el, {
-      group: {
-        name: "shared",
-        put: function(to) {
-          return to.el.children.length < 7;
-        }
-        /*
-        pull: function(to, from) {
-          return from.el.children.length > 1;
-        }
-        */
-      },
-      animation: 150,
-      ghostClass: "ghost",
-      onAdd: function(evt) {
-        handleAddEvent(evt.item);
-      }
-    });
-  }
+  let yr5 = document.querySelectorAll('#yr5');
+  yr5.forEach(e => e.style.display = 'block'); 
 }
 
 function cachedFetch(url, options) {
