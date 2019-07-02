@@ -71,6 +71,17 @@ a:visited {
 
 .list-group-item a .title {
   font-weight: 300;
+  color: rgb(70, 70, 70) !important;
+  font-size: 85%;
+  max-width: 225px;
+  display: block;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.list-group.sm .list-group-item a .title {
+  font-weight: 300;
   color: rgb(78, 78, 78) !important;
   font-size: 85%;
   max-width: 150px;
@@ -126,6 +137,7 @@ a:visited {
 .list-group-item .text-muted {
   position: absolute;
   right: 22px;
+  font-size: 95%;
 }
 
 strong {
