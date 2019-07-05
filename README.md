@@ -69,3 +69,6 @@ Core modules will be automatically placed into most suitable semester.
 
 Source code available on [GitHub](https://github.com/darrelhong/modplanner).
 
+# Feedback
+
+Feel free to send us your feedback through GitHub issue filing!
