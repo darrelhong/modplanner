@@ -71,4 +71,4 @@ Source code available on [GitHub](https://github.com/darrelhong/modplanner).
 
 # Feedback
 
-Feel free to send us your feedback through GitHub issue filing!
+Feel free to file an issue on GitHub if you have any feedback!
