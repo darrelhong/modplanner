@@ -245,7 +245,7 @@ moduleForm.addEventListener("submit", function(e) {
       <div class="list-group-item ${color}" id="${data.moduleCode}">
       <a href="https://nusmods.com/modules/${
         data.moduleCode
-      }" target="_blank">${data.moduleCode}</a>
+      }" target="_blank">${data.moduleCode}<br><span class="title">${data.title}</span></a>
       <span class='text-muted'>${data.moduleCredit} MCs</span>
       <button type="button" class="close" aria-label="Close">
       <span aria-hidden="true">&times;</span>
