@@ -31,22 +31,23 @@
 
     <link rel="stylesheet" href="./apis/autocomplete.css" />
     <script src="./apis/autocomplete.js"></script>
+    <script src="./apis/html2canvas.min.js"></script>
   </head>
 
   <body>
-    <nav class="navbar navbar-light py-0">
+    <nav class="navbar navbar-light py-0" data-html2canvas-ignore>
       <a class="navbar-brand">Module Planner</a>
       <a href="https://github.com/darrelhong/modplanner">
         <img src="./img/GitHub-Mark-64px.png" width="20" height="20" alt="" />
       </a>
     </nav>
     <div class="container">
-      <div class="row justify-content-center" id="btn-group">
-        <div class="btn-group" role="group" aria-label="Basic example">
+      <div class="row justify-content-center" id="btn-group" data-html2canvas-ignore>
+        <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
           <button
             type="button"
             id="btn1"
-            class="btn btn-outline-dark active"
+            class="btn btn-sm btn-outline-dark active"
             data-toggle="collapse"
             data-target="#collapse1"
           >
@@ -55,7 +56,7 @@
           <button
             type="button"
             id="btn2"
-            class="btn btn-outline-dark"
+            class="btn btn-sm btn-outline-dark"
             data-toggle="collapse"
             data-target="#collapse2"
           >
@@ -63,7 +64,7 @@
           </button>
         </div>
       </div>
-      <div class="row justify-content-center" id="">
+      <div class="row justify-content-center" data-html2canvas-ignore>
         <small class="text-muted">Show/hide</small>
       </div>
       <div class="row collapse show" id="collapse1">
@@ -73,7 +74,7 @@
             <div id="simpleList1" class="list-group sm"></div>
           </div>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-3" id="png">
           <div class="card border-info mb-3 bg-light">
             <div class="card-header bg-info">Year 1 Sem 2</div>
             <div id="simpleList2" class="list-group sm"></div>
@@ -117,7 +118,7 @@
             <div id="simpleList8" class="list-group sm"></div>
           </div>
         </div>
-        <button class="btn btn-info" id="add-year" onclick="addYear()">
+        <button class="btn btn-info" id="add-year" onclick="addYear()" data-html2canvas-ignore>
           Add year +
         </button>
         <div class="col-md-3" id="yr5">
@@ -133,7 +134,7 @@
           </div>
         </div>
       </div>
-      <div class="row justify-content-center">
+      <div class="row justify-content-center" data-html2canvas-ignore>
         <div class="col-md-4">
           <form id="course-select">
             <div class="form-group">
@@ -167,8 +168,9 @@
               Add module
             </button>
           </form>
+          <button class="btn btn-sm btn-success" id="btn-download">Save as .png</button>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-4 ignore">
           <div class="card bottom bg-secondary border-light">
             <div class="card-header bg-warning">Module list</div>
             <div id="buffer" class="list-group"></div>
@@ -176,12 +178,12 @@
           <p class="text-center">Drag and drop modules!</p>
         </div>
       </div>
-      <div class="row justify-content-center">
-        <a
-          href="https://github.com/darrelhong/modplanner/blob/master/README.md#feedback"
-          style="color: rgb(53, 53, 53); font-weight: 300;"
-          >Give feedback!</a
-        >
+      <div class="row justify-content-center ignore" data-html2canvas-ignore>
+          <a
+            href="https://github.com/darrelhong/modplanner/blob/master/README.md#feedback"
+            style="color: rgb(53, 53, 53); font-weight: 300;"
+            >Give feedback!</a
+          >
       </div>
     </div>
     <script src="index.js"></script>
