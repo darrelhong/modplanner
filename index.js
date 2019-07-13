@@ -15,12 +15,12 @@ for (i = 1; i < 11; i++) {
     },
     animation: 150,
     ghostClass: "ghost",
-    onAdd: function(evt) {      
+    onAdd: function(evt) {
       handleAddEvent(evt);
     },
     onRemove: function(evt) {
-      if (evt.to.id === 'buffer') {
-        evt.item.classList.remove('error');
+      if (evt.to.id === "buffer") {
+        evt.item.classList.remove("error");
       }
     }
   });
@@ -53,7 +53,7 @@ function handleAddEvent(evt) {
 
 function handleAddToBufferEvent(evt) {
   let moduleCode = evt.item.innerText.split(/\s/)[0];
-  sessionStorage.setItem(moduleCode, 'b');
+  sessionStorage.setItem(moduleCode, "b");
   removeModule(moduleCode);
   console.log(activeModules);
   evt.item.classList.remove("error");
@@ -157,18 +157,7 @@ getSearchData().then(ml => {
   });
 });
 
-function generateRandomCard() {
-  let color = getRandomItem(colors);
-  // let color = '';
-  let alphabet = getRandomItem(alphabets);
-  let result = `<div class="list-group-item ${color}">
-      Module ${alphabet} <span class='text-muted'>4 MCs</span>
-      <button type="button" class="close" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>`;
-  return result;
-}
+
 
 function generateCourseCards(array) {
   array.forEach(mod => {
@@ -179,23 +168,26 @@ function generateCourseCards(array) {
       })
       .then(data => {
         let color = getRandomItem(colors);
-        let moduleCode = data.moduleCode;
-        let card = `<div class="list-group-item ${color}" id="${
-          moduleCode
-        }">
-      <a href="https://nusmods.com/modules/${
-        moduleCode
-      }" target="_blank">${moduleCode}<br><span class="title">${data.title}</span></a>
-      <span class='text-muted'>${data.moduleCredit} MCs</span>
-      <button type="button" class="close" aria-label="Close">
-      <span aria-hidden="true">&times;</span>
-      </button>
-      </div>`;
+        let card = returnCard(data, color);
         addToBuffer(card);
-        sessionStorage.setItem(moduleCode, 'b')
+        sessionStorage.setItem(data.moduleCode, "b");
       });
   });
 }
+
+// Helper function
+function returnCard(data, color) {
+  return `<div class="list-group-item ${color}" id="${data.moduleCode}">
+  <a href="https://nusmods.com/modules/${data.moduleCode}" target="_blank">${
+    data.moduleCode
+  }<br><span class="title">${data.title}</span></a>
+  <span class='text-muted'>${data.moduleCredit} MCs</span>
+  <button type="button" class="close" aria-label="Close">
+  <span aria-hidden="true">&times;</span>
+  </button>
+  </div>`;
+}
+
 // Helper function
 function getRandomItem(collection) {
   return collection[Math.floor(Math.random() * collection.length)];
@@ -239,23 +231,15 @@ moduleForm.addEventListener("submit", function(e) {
         return data;
       })
       .then(data => {
-        let elChild = document.createElement("div");
+        // let elChild = document.createElement("div");
         let color = getRandomItem(colors);
-        elChild.innerHTML = `
-      <div class="list-group-item ${color}" id="${data.moduleCode}">
-      <a href="https://nusmods.com/modules/${
-        data.moduleCode
-      }" target="_blank">${data.moduleCode}<br><span class="title">${data.title}</span></a>
-      <span class='text-muted'>${data.moduleCredit} MCs</span>
-      <button type="button" class="close" aria-label="Close">
-      <span aria-hidden="true">&times;</span>
-      </button>
-      </div>`;
-        bufferEl.insertBefore(elChild, buffer.firstChild);
+        let card = returnCard(data, color);
+        addToBuffer(card);
+        sessionStorage.setItem(data.moduleCode, "b");
         document.querySelector("#module-code").value = "";
         document.querySelector("#buffer").scrollTo({
           top: 0,
-          behavior: 'smooth'
+          behavior: "smooth"
         });
       });
   }
@@ -298,68 +282,27 @@ btn2.addEventListener("click", function() {
 // Add year 5
 function addYear() {
   document.getElementById("add-year").remove();
-  let yr5 = document.querySelectorAll('#yr5');
-  yr5.forEach(e => e.style.display = 'block'); 
+  let yr5 = document.querySelectorAll("#yr5");
+  yr5.forEach(e => (e.style.display = "block"));
 }
 
-function cachedFetch(url, options) {
-  let expiry = 24 * 60 * 60; // 1 day expiry
-  if (typeof options === "number") {
-    expiry = options;
-    options = undefined;
-  } else if (typeof options === "object") {
-    // I hope you didn't set it to 0 seconds
-    expiry = options.seconds || expiry;
-  }
-  // Use the URL as the cache key to sessionStorage
-  let cacheKey = url;
-  let cached = localStorage.getItem(cacheKey);
-  let whenCached = localStorage.getItem(cacheKey + ":ts");
-  if (cached !== null && whenCached !== null) {
-    // it was in sessionStorage! Yay!
-    // Even though 'whenCached' is a string, this operation
-    // works because the minus sign converts the
-    // string to an integer and it will work.
-    let age = (Date.now() - whenCached) / 1000;
-    if (age < expiry) {
-      let response = new Response(new Blob([cached]));
-      return Promise.resolve(response);
-    } else {
-      // We need to clean up this old key
-      localStorage.removeItem(cacheKey);
-      localStorage.removeItem(cacheKey + ":ts");
-    }
-  }
 
-  return fetch(url, options).then(response => {
-    // let's only store in cache if the content-type is
-    // JSON or something non-binary
-    if (response.status === 200) {
-      let ct = response.headers.get("Content-Type");
-      if (ct && (ct.match(/application\/json/i) || ct.match(/text\//i))) {
-        // There is a .json() instead of .text() but
-        // we're going to store it in sessionStorage as
-        // string anyway.
-        // If we don't clone the response, it will be
-        // consumed by the time it's returned. This
-        // way we're being un-intrusive.
-        response
-          .clone()
-          .text()
-          .then(content => {
-            localStorage.setItem(cacheKey, content);
-            localStorage.setItem(cacheKey + ":ts", Date.now());
-          });
-      }
-    }
-    return response;
-  });
+function generateRandomCard() {
+  let color = getRandomItem(colors);
+  // let color = '';
+  let alphabet = getRandomItem(alphabets);
+  let result = `<div class="list-group-item ${color}">
+            Module ${alphabet} <span class='text-muted'>4 MCs</span>
+            <button type="button" class="close" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>`;
+  return result;
 }
-
 // prettier-ignore
 const csCoreModules = ['CS1010', 'CS1231', 'CS2030', 'CS2040', 'CS2100',
-  'CS2103T', 'CS2105', 'CS2106', 'CS3230', 'IS1103', 'CS2101', 'ES2660', 'MA1521',
-  'MA1101R', 'ST2334'];
+      'CS2103T', 'CS2105', 'CS2106', 'CS3230', 'IS1103', 'CS2101', 'ES2660', 'MA1521',
+      'MA1101R', 'ST2334'];
 
 const baCoreModules = [
   "BT1101",
