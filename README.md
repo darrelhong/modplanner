@@ -64,6 +64,7 @@ Core modules will be automatically placed into most suitable semester.
 - [NUSMods API](https://nusmods.com/api/v2) - To retrieve module information (MCs, Prerequisites etc.)
 - [SortarbleJS](https://github.com/SortableJS/Sortable) - JS library for implementing drag-and-drop lists
 - [Autocomplete](https://github.com/kraaden/autocomplete) - Lightweight autocomplete library for module search function
+- [html2canvas](https://html2canvas.hertzen.com/) - Take screenshot for export function
 
 # Source code
 
