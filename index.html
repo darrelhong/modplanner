@@ -133,20 +133,22 @@
             <div id="simpleList10" class="list-group sm"></div>
           </div>
         </div>
+        <div class="col-md-3" id="yr5">
+          <button class="btn btn-info" id="add-year" onclick="removeYear()" data-html2canvas-ignore>
+            Remove year −
+          </button>
+        </div>
       </div>
       <div class="row justify-content-center" data-html2canvas-ignore>
         <div class="col-md-4">
-          <form id="course-select">
+          <form id="courseForm">
             <div class="form-group">
               <label for="courseSelect">Select course</label>
               <select
                 class="form-control"
-                id="course"
+                id="courseSelect"
                 onchange="enableGenButton()"
               >
-                <option>Computer Science</option>
-                <option>Business Analytics</option>
-                <option>Information Systems</option>
               </select>
             </div>
             <button type="submit" class="btn btn-primary" id="course-button">

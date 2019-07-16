@@ -74,6 +74,7 @@ function recheckAll() {
 
 function removeModule(modStr) {
   activeModules.splice(activeModules.indexOf(modStr), 1);
+  sessionStorage.removeItem(modStr);
 }
 
 // Helper function
@@ -232,6 +233,12 @@ const bufferEl = document.querySelector('#buffer');
 function addToBuffer(htmlText) {
   let element = document.createElement('div');
   element.innerHTML = htmlText;
+  bufferEl.appendChild(element.firstChild, bufferEl.firstChild);
+}
+
+function addToBufferTop(htmlText) {
+  let element = document.createElement('div');
+  element.innerHTML = htmlText;
   bufferEl.insertBefore(element.firstChild, bufferEl.firstChild);
 }
 
@@ -261,7 +268,7 @@ moduleForm.addEventListener('submit', function(e) {
         // let elChild = document.createElement("div");
         let color = getRandomItem(colors);
         let card = returnCard(data, color);
-        addToBuffer(card);
+        addToBufferTop(card);
         sessionStorage.setItem(data.moduleCode, 'b');
         document.querySelector('#module-code').value = '';
         document.querySelector('#buffer').scrollTo({
@@ -273,23 +280,14 @@ moduleForm.addEventListener('submit', function(e) {
 });
 
 // Course selector.
-const courseForm = document.querySelector('#course-select');
+const courseForm = document.querySelector('#courseForm');
+
 courseForm.addEventListener('submit', function(e) {
   e.preventDefault();
   document.querySelector('#course-button').disabled = true;
-  let course = document.querySelector('#course').value;
+  let course = document.querySelector('#courseSelect').value;
   console.log(course);
-  switch (course) {
-    case 'Computer Science':
-      generateCourseCards(csCoreModules);
-      break;
-    case 'Business Analytics':
-      generateCourseCards(baCoreModules);
-      break;
-    case 'Information Systems':
-      generateCourseCards(isCoreModules);
-      break;
-  }
+  generateCourseCards(coreModules[course]);
 });
 
 function enableGenButton() {
@@ -309,9 +307,16 @@ btn2.addEventListener('click', function() {
 
 // Add year 5
 function addYear() {
-  document.getElementById('add-year').remove();
+  document.getElementById('add-year').style.display = 'none';
   let yr5 = document.querySelectorAll('#yr5');
   yr5.forEach(e => (e.style.display = 'block'));
+}
+
+//Remove year 5
+function removeYear() {
+  let yr5 = document.querySelectorAll('#yr5');
+  yr5.forEach(e => (e.style.display = 'none'));
+  document.getElementById('add-year').style.display = 'block';
 }
 
 function generateRandomCard() {
@@ -352,47 +357,61 @@ function saveAs(uri, filename) {
   }
 }
 // prettier-ignore
-const csCoreModules = ['CS1010', 'CS1231', 'CS2030', 'CS2040', 'CS2100',
-      'CS2103T', 'CS2105', 'CS2106', 'CS3230', 'IS1103', 'CS2101', 'ES2660', 'MA1521',
-      'MA1101R', 'ST2334'];
+const coreModules = {
+  'Computer Science': ['CS1010', 'CS1231', 'CS2030', 'CS2040', 'CS2100',
+    'CS2103T', 'CS2105', 'CS2106', 'CS3230', 'IS1103', 'CS2101', 'ES2660', 
+    'MA1521', 'MA1101R', 'ST2334'],
+  
+  'Business Analytics': ['BT1101', 'CS1010', 'EC1301', 'IS1103','MA1101R',
+    'MA1521', 'MKT1705X', 'BT2101', 'BT2102', 'CS2030',  'CS2040', 'IS2101',
+    'ST2334', 'BT3102', 'BT3102', 'BT3103', 'IS3103'],
 
-const baCoreModules = [
-  'BT1101',
-  'CS1010',
-  'EC1301',
-  'IS1103',
-  'MA1101R',
-  'MA1521',
-  'MKT1705X',
-  'BT2101',
-  'BT2102',
-  'CS2030',
-  'CS2040',
-  'IS2101',
-  'ST2334',
-  'BT3102',
-  'BT3102',
-  'BT3103',
-  'IS3103'
-];
+  'Information Systems': [ 'CS1010', 'CS1231', 'IS1103', 'CS2030', 'CS2040',
+    'CS2102', 'CS2105', 'IS2101', 'IS2102', 'IS2103', 'IS3103', 'IS3106',
+    'IS4100', 'IS4103', 'MA1301', 'MA1312', 'MA1521', 'ST2334'],
+  
+  'Computer Engineering': ['CS1010', 'CS2040', 'CS2113T', 'CS1231', 'MA1511',
+    'MA1512', 'MA1508E', 'CG1111', 'CG1112', 'ST2334', 'CS2101', 'CG2271', 
+    'CG2027', 'CG2023', 'EE2026', 'EG2401A', 'CG3207', 'CG4002', 'EE4204',
+    'CP3880', 'EG3611A', 'CS3230'],
 
-const isCoreModules = [
-  'CS1010',
-  'CS1231',
-  'IS1103',
-  'CS2030',
-  'CS2040',
-  'CS2102',
-  'CS2105',
-  'IS2101',
-  'IS2102',
-  'IS2103',
-  'IS3103',
-  'IS3106',
-  'IS4100',
-  'IS4103',
-  'MA1301',
-  'MA1312',
-  'MA1521',
-  'ST2334'
-];
+  'Information Security': ['CS1010','CS1231','CS2040C','CS2100','CS2101',
+    'CS2102','CS2105','CS2106','CS2107','CS2113T','CS3235 ','IFS4205',
+    'IS1103','IS3103','IS4231','MA1101R','MA1521','ST2334'],
+
+  'Biomedical Engineering': ['BN2102','BN2201','BN2202','BN2204','BN2301','BN2403','CM1501','CS1010E','EE2211','EG1311','EG2401A','ES1531','IE2141','MA1505','MA1508E','MA1511','MA1512','MA1513','MLE1010'],
+
+  'Chemical Engineering': ['CN1101','CN1102','CN2101','CN2116','CN2121','CN2122','CN2125','CN3101','CN3102','CN3121','CS1010E','EE2211','EG1311','EG2401A','ES1531','IE2141','MA1505','MA1508E','MA1511','MA1512','MA1513','MLE1010'],
+
+  'Civil Engineering': ['CE1101','CE1102','CE2112','CE2134','CE2155','CE2183','CE2407','CE2409','CE3115','CE3116','CE3121','CE3132','CE3155','CE3165','CE3166','CE4103','CE4104','CS1010E','EE2211','EG1311','EG2401A','EG3611A','ES1531','ESE3001','IE2141','MA1505','MA1508E','MA1511','MA1512','MA1513','MLE1010','PC1431'],
+
+  'Electrical Engineering': ['CS1010E','EE2012A','EE2023','EE2026','EE2027','EE2028','EE2028A','EE2029','EE2033','EE2211','EG1311','EG2401A','ES1531','IE2141','MA1505','MA1508E','MA1511','MA1512','MA1513','MLE1010','PC2020'],
+
+  'Environmental Engineering': ['E1101','CE2134','CE2409','CM1502','CS1010E','EE2211','EG1311','EG2401A','EG3611A','ES1531','ESE1001','ESE1102','ESE2001','ESE2401','ESE3101','ESE3201','ESE3301','ESE3401','ESE4501','ESE4502R','IE2141','MA1505','MA1508E','MA1511','MA1512','MA1513','MLE1010','PC1431'],
+
+  'Industrial Systems Engineering and Management': ['CS1010E','EE2211','EG1311','EG2401A','ES1531','IE1111','IE1111R','IE1112','IE2100','IE2110','IE2111','IE2130','IE2140','IE2141','IE2150','IE3100M','IE3100R','IE3101','IE3110','IE3110R','IE4100R','IE4102','MA1505','MA1508E','MA1511','MA1512','MA1513','MLE1010'],
+
+  'Materials Science and Engineering': ['CS1010E','EE2211','EG1311','EG2401A','ES1531','IE2141','MA1505','MA1508E','MA1511','MA1512','MA1513','MLE1010','MLE2101','MLE2103','MLE2104','MLE2105','MLE3101','MLE3111','MLE4101','MLE4102','MLLE2102'],
+  
+  'Mechanical Engineering': ['CS1010E','EE2211','EG1311','EG2401A','ES1531','IE2141','MA1505','MA1508E','MA1511','MA1512','MA1513','ME2102','ME2112','ME2115','ME2121','ME2134','ME2142','ME2151','ME3103','ME3162','ME4101A','ME4102','ME4103','MLE1010'],
+
+  'Business Administration': ['DAO1704','DAO2702','BSP1703','BSP2701','ACC1701','BSP1702','MKT1705','MNO1706','FIN2704','DAO2703', 'MNO2705','BSP3701','ES2002'],
+
+  'Business Administration (Accountancy)': ['DAO1704','DAO2702','BSP1707','BSP2701','ACC1701','BSP1702','MKT1705','MNO1706','FIN2704','DAO2703','MNO2706','BSP3701','ES2002'],
+
+}
+
+// Generate core module options
+const courseSelect = document.querySelector('#courseSelect');
+let counter = 0;
+for (const key in coreModules) {
+  let option = document.createElement('option');
+  option.text = key;
+  courseSelect.add(option);
+  if (counter === 4 || counter === 12) {  
+    let blank = document.createElement('option');
+    blank.text = '____________';
+    courseSelect.add(blank);
+  }
+  counter++;
+}

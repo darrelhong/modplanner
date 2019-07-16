@@ -160,6 +160,7 @@ strong {
 
 #add-year {
   margin-left: 1em;
+  display: block;
 }
 
 #buffer::-webkit-scrollbar-track {
