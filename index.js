@@ -114,7 +114,6 @@ const colors = ['blue', 'teal', 'yellow', 'orange', 'red'];
 const moduleObjs = new Map();
 const activeModules = [];
 
-// Autocomplete module search
 async function getSearchData() {
   const moduleListURL = 'https://api.nusmods.com/v2/2018-2019/moduleList.json';
   const cache = await caches.open('searchcache');
@@ -130,6 +129,7 @@ async function getSearchData() {
   }
 }
 
+// Autocomplete module search
 getSearchData().then(ml => {
   var input = document.getElementById('module-code');
   autocomplete({
@@ -137,8 +137,14 @@ getSearchData().then(ml => {
     fetch: function(text, update) {
       text = text.toLowerCase();
       // you can also use AJAX requests instead of preloaded data
-      var suggestions = ml.filter(n =>
-        n.moduleCode.toLowerCase().includes(text)
+      var suggestions = ml.filter(function(n) {
+        if (n.moduleCode.toLowerCase().includes(text) ||
+        n.title.toLowerCase().includes(text)) {
+          return true;
+        } else {
+          return false;
+        }
+      }
       );
       update(suggestions);
     },
@@ -149,7 +155,10 @@ getSearchData().then(ml => {
         return '<strong>' + match + '</strong>';
       });
       itemElement.innerHTML = inner;
-      itemElement.innerHTML += ` ${item.title}`;
+      var title = item.title.replace(regex, function(match) {
+        return '<strong>' + match + '</strong>';
+      });
+      itemElement.innerHTML += title;
       return itemElement;
     },
     onSelect: function(item) {
