@@ -40,57 +40,73 @@ Sortable.create(buffer, {
 });
 
 function handleAddEvent(evt) {
-  let id = evt.to.id.substring(10);
+  let toID = evt.to.id.substring(10);
+  let fromID = evt.from.id.substring(10);
   let moduleCode = evt.item.innerText.split(/\s/)[0];
-  sessionStorage.setItem(moduleCode, id);
-  activeModules.push(moduleCode);
-  if (!prereqV2(moduleCode)) {
+  if (fromID.match(/^\d+$/)) {
+    removeModule(moduleCode, fromID);
+  }
+  sessionStorage.setItem(moduleCode, toID);
+  activeModules[toID - 1].push(moduleCode);
+  if (!prereq(moduleCode)) {
     evt.item.classList.add('error');
   }
-  recheckAll();
   console.log(activeModules);
+  recheckAll();
 }
 
 function handleAddToBufferEvent(evt) {
+  let id = evt.from.id.substring(10);
   let moduleCode = evt.item.innerText.split(/\s/)[0];
   sessionStorage.setItem(moduleCode, 'b');
-  removeModule(moduleCode);
+  removeModule(moduleCode, id);
   console.log(activeModules);
   evt.item.classList.remove('error');
+  console.log(activeModules);
   recheckAll();
 }
 
 // Recheck prereq
 function recheckAll() {
   console.log('recheckAll');
-  activeModules.forEach(activeMod => {
-    if (!prereqV2(activeMod)) {
-      document.querySelector(`#${activeMod}`).classList.add('error');
-    } else {
-      document.querySelector(`#${activeMod}`).classList.remove('error');
-    }
+  let index = 0;
+  activeModules.forEach(array => {
+    index++;
+    array.forEach(activeMod => {
+      if (!prereq(activeMod, index)) {
+        document.querySelector(`#${activeMod}`).classList.add('error');
+      } else {
+        document.querySelector(`#${activeMod}`).classList.remove('error');
+      }
+    });
   });
 }
 
-function removeModule(modStr) {
-  activeModules.splice(activeModules.indexOf(modStr), 1);
-  sessionStorage.removeItem(modStr);
+function removeModule(moduleCode, id) {
+  activeModules[id - 1].splice(
+    activeModules[id - 1].indexOf(moduleCode),
+    1
+  );
+  sessionStorage.removeItem(moduleCode);
 }
 
 // Helper function
-function prereqV2(module) {
+function prereq(module, id) {
   let contains = false;
   if (!moduleObjs.get(module).prereqTree) {
     contains = true;
   } else {
-    activeModules.forEach(amod => {
-      if (moduleObjs.get(amod).fulfillRequirements) {
-        let fulfillRequirements = moduleObjs.get(amod).fulfillRequirements;
-        if (fulfillRequirements.includes(module)) {
-          contains = true;
+    for (i = 0; i < id - 1; i++) {
+      activeModules[i].forEach(activeMod => {
+        if (moduleObjs.get(activeMod).fulfillRequirements) {
+          let fulfillRequirements = moduleObjs.get(activeMod)
+            .fulfillRequirements;
+          if (fulfillRequirements.includes(module)) {
+            contains = true;
+          }
         }
-      }
-    });
+      });
+    }
   }
   return contains;
 }
@@ -112,7 +128,7 @@ async function getModData(module) {
 
 const colors = ['blue', 'teal', 'yellow', 'orange', 'red'];
 const moduleObjs = new Map();
-const activeModules = [];
+const activeModules = [[], [], [], [], [], [], [], [], [], []];
 
 async function getSearchData() {
   const moduleListURL = 'https://api.nusmods.com/v2/2018-2019/moduleList.json';
@@ -138,14 +154,16 @@ getSearchData().then(ml => {
       text = text.toLowerCase();
       // you can also use AJAX requests instead of preloaded data
       var suggestions = ml.filter(function(n) {
-        if (n.moduleCode.toLowerCase().includes(text) ||
-        n.title.toLowerCase().includes(text)) {
+        if (
+          n.moduleCode.toLowerCase().includes(text) ||
+          n.title.toLowerCase().includes(text)
+        ) {
           return true;
         } else {
           return false;
         }
-      }
-      );
+      });
+
       update(suggestions);
     },
     render: function(item, value) {
@@ -154,7 +172,7 @@ getSearchData().then(ml => {
       var inner = item.moduleCode.replace(regex, function(match) {
         return '<strong>' + match + '</strong>';
       });
-      itemElement.innerHTML = inner;
+      itemElement.innerHTML = `${inner} `;
       var title = item.title.replace(regex, function(match) {
         return '<strong>' + match + '</strong>';
       });
@@ -183,7 +201,7 @@ async function persist() {
         if (position === 'b') {
           addToBuffer(card);
         } else {
-          activeModules.push(data.moduleCode);
+          activeModules[position - 1].push(data.moduleCode);
           addToPosition(card, position);
           recheckAll();
         }
@@ -417,7 +435,7 @@ for (const key in coreModules) {
   let option = document.createElement('option');
   option.text = key;
   courseSelect.add(option);
-  if (counter === 4 || counter === 12) {  
+  if (counter === 4 || counter === 12) {
     let blank = document.createElement('option');
     blank.text = '____________';
     courseSelect.add(blank);
