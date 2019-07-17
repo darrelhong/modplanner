@@ -53,17 +53,40 @@ function handleAddEvent(evt) {
   }
   console.log(activeModules);
   recheckAll();
+
+  //handle Module Credit display
+  let moduleCredit = parseInt(moduleObjs.get(moduleCode).moduleCredit);
+  addMC(moduleCredit, toID);
+  if (fromID.match(/^\d+$/)) {
+    removeMC(moduleCredit, fromID);
+  }
+}
+
+function addMC(moduleCredit, toID) {
+  let toElementMC = document.querySelector(`#mc${parseInt(toID)}`);
+  let toMC = parseInt(toElementMC.innerText.split(' ')[0]);
+  toMC += moduleCredit;
+  toElementMC.innerText = `${toMC} MCs`;
+}
+
+function removeMC(moduleCredit, fromID) {
+    let fromElementMC = document.querySelector(`#mc${parseInt(fromID)}`);
+    let fromMC = parseInt(fromElementMC.innerText.split(' ')[0]);
+    fromMC -= moduleCredit;
+    fromElementMC.innerText = `${fromMC} MCs`;
 }
 
 function handleAddToBufferEvent(evt) {
-  let id = evt.from.id.substring(10);
+  let fromID = evt.from.id.substring(10);
   let moduleCode = evt.item.innerText.split(/\s/)[0];
   sessionStorage.setItem(moduleCode, 'b');
-  removeModule(moduleCode, id);
+  removeModule(moduleCode, fromID);
   console.log(activeModules);
   evt.item.classList.remove('error');
   console.log(activeModules);
   recheckAll();
+  let moduleCredit = parseInt(moduleObjs.get(moduleCode).moduleCredit);
+  removeMC(moduleCredit, fromID);
 }
 
 // Recheck prereq
@@ -83,11 +106,9 @@ function recheckAll() {
 }
 
 function removeModule(moduleCode, id) {
-  activeModules[id - 1].splice(
-    activeModules[id - 1].indexOf(moduleCode),
-    1
-  );
+  activeModules[id - 1].splice(activeModules[id - 1].indexOf(moduleCode), 1);
   sessionStorage.removeItem(moduleCode);
+  console.log(activeModules);
 }
 
 // Helper function
@@ -202,6 +223,8 @@ async function persist() {
           addToBuffer(card);
         } else {
           activeModules[position - 1].push(data.moduleCode);
+          let moduleCredit = parseInt(data.moduleCredit);
+          addMC(moduleCredit, position);
           addToPosition(card, position);
           recheckAll();
         }
@@ -273,7 +296,14 @@ function addToBufferTop(htmlText) {
 document.addEventListener('click', function(e) {
   if (e.target.parentNode) {
     if (e.target.parentNode.matches('.close')) {
-      removeModule(e.target.parentNode.parentNode.id);
+      let position = e.target.parentNode.parentNode.parentNode.id;
+      if (position === 'buffer') {
+        e.target.parentNode.parentNode.remove();
+        sessionStorage.removeItem(e.target.parentNode.parentNode.id);
+      } else {
+        let id = position.substring(10);
+        removeModule(e.target.parentNode.parentNode.id, id);
+      }
       e.target.parentNode.parentNode.remove();
       recheckAll();
     }
@@ -306,7 +336,7 @@ moduleForm.addEventListener('submit', function(e) {
   }
 });
 
-// Course selector.
+// Course selector
 const courseForm = document.querySelector('#courseForm');
 
 courseForm.addEventListener('submit', function(e) {
@@ -359,6 +389,7 @@ function generateRandomCard() {
   return result;
 }
 
+//Export.png function
 let ssbutton = document.getElementById('btn-download');
 let box = document.querySelector('.container');
 ssbutton.addEventListener('click', function(e) {

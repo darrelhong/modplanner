@@ -118,7 +118,7 @@ a:visited {
 }
 
 .list-group-item.error {
-  background-color: crimson !important;
+  background-color: rgba(255, 78, 78, 0.918) !important;
 }
 
 .list-group-item .close {
