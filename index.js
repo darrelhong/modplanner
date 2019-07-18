@@ -70,17 +70,17 @@ function addMC(moduleCredit, toID) {
 }
 
 function removeMC(moduleCredit, fromID) {
-    let fromElementMC = document.querySelector(`#mc${parseInt(fromID)}`);
-    let fromMC = parseInt(fromElementMC.innerText.split(' ')[0]);
-    fromMC -= moduleCredit;
-    fromElementMC.innerText = `${fromMC} MCs`;
+  let fromElementMC = document.querySelector(`#mc${parseInt(fromID)}`);
+  let fromMC = parseInt(fromElementMC.innerText.split(' ')[0]);
+  fromMC -= moduleCredit;
+  fromElementMC.innerText = `${fromMC} MCs`;
 }
 
 function handleAddToBufferEvent(evt) {
   let fromID = evt.from.id.substring(10);
   let moduleCode = evt.item.innerText.split(/\s/)[0];
-  sessionStorage.setItem(moduleCode, 'b');
   removeModule(moduleCode, fromID);
+  sessionStorage.setItem(moduleCode, 'b');
   console.log(activeModules);
   evt.item.classList.remove('error');
   console.log(activeModules);
@@ -211,7 +211,7 @@ async function persist() {
   for (let i = 0; i < sessionStorage.length; i++) {
     let moduleCode = sessionStorage.key(i);
     let position = sessionStorage.getItem(sessionStorage.key(i));
-    getModData(moduleCode)
+    await getModData(moduleCode)
       .then(data => {
         moduleObjs.set(data.moduleCode, data);
         return data;
@@ -226,19 +226,17 @@ async function persist() {
           let moduleCredit = parseInt(data.moduleCredit);
           addMC(moduleCredit, position);
           addToPosition(card, position);
-          recheckAll();
         }
       });
   }
 }
 
-persist().then(recheckAll());
+persist().then(recheckAll);
 
 function addToPosition(htmlText, position) {
   let el = document.createElement('div');
   el.innerHTML = htmlText;
   let list = `#simpleList${position}`;
-  console.log(list);
   let positionEl = document.querySelector(list);
   positionEl.insertBefore(el.firstChild, positionEl.firstChild);
 }
@@ -297,14 +295,17 @@ document.addEventListener('click', function(e) {
   if (e.target.parentNode) {
     if (e.target.parentNode.matches('.close')) {
       let position = e.target.parentNode.parentNode.parentNode.id;
+      let moduleCode = e.target.parentNode.parentNode.id;
       if (position === 'buffer') {
         e.target.parentNode.parentNode.remove();
-        sessionStorage.removeItem(e.target.parentNode.parentNode.id);
+        sessionStorage.removeItem(moduleCode);
       } else {
         let id = position.substring(10);
-        removeModule(e.target.parentNode.parentNode.id, id);
+        let moduleCredit = moduleObjs.get(moduleCode).moduleCredit;
+        removeMC(moduleCredit, id);
+        removeModule(moduleCode, id);
+        e.target.parentNode.parentNode.remove();
       }
-      e.target.parentNode.parentNode.remove();
       recheckAll();
     }
   }
