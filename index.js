@@ -241,6 +241,7 @@ function addToPosition(htmlText, position) {
   positionEl.insertBefore(el.firstChild, positionEl.firstChild);
 }
 
+
 function generateCourseCards(array) {
   array.forEach(mod => {
     getModData(mod)
@@ -523,3 +524,6 @@ for (const key in coreModules) {
   }
   counter++;
 }
+$( document ).ready(function() {
+  $('#info').tooltip();
+});

@@ -186,3 +186,7 @@ strong {
     transparent
   );
 }
+
+.tooltip.show {
+  opacity: 0.7 !important;
+} 

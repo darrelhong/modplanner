@@ -16,12 +16,17 @@
       integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
       crossorigin="anonymous"
     ></script>
-
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+      integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+      crossorigin="anonymous"
+    ></script>
     <script
       src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
       integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
       crossorigin="anonymous"
     ></script>
+
     <script src="https://raw.githack.com/SortableJS/Sortable/master/Sortable.js"></script>
 
     <link
@@ -42,8 +47,16 @@
       </a>
     </nav>
     <div class="container">
-      <div class="row justify-content-center" id="btn-group" data-html2canvas-ignore>
-        <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
+      <div
+        class="row justify-content-center"
+        id="btn-group"
+        data-html2canvas-ignore
+      >
+        <div
+          class="btn-group btn-group-sm"
+          role="group"
+          aria-label="Basic example"
+        >
           <button
             type="button"
             id="btn1"
@@ -142,7 +155,12 @@
             <div id="simpleList8" class="list-group sm"></div>
           </div>
         </div>
-        <button class="btn btn-info" id="add-year" onclick="addYear()" data-html2canvas-ignore>
+        <button
+          class="btn btn-info"
+          id="add-year"
+          onclick="addYear()"
+          data-html2canvas-ignore
+        >
           Add year +
         </button>
         <div class="col-md-3" id="yr5">
@@ -164,7 +182,12 @@
           </div>
         </div>
         <div class="col-md-3" id="yr5">
-          <button class="btn btn-info" id="add-year" onclick="removeYear()" data-html2canvas-ignore>
+          <button
+            class="btn btn-info"
+            id="add-year"
+            onclick="removeYear()"
+            data-html2canvas-ignore
+          >
             Remove year −
           </button>
         </div>
@@ -173,7 +196,19 @@
         <div class="col-md-4">
           <form id="courseForm">
             <div class="form-group">
-              <label for="courseSelect">Select course</label>
+              <label for="courseSelect">
+                Select course
+              </label>
+
+              <img
+                id="info"
+                src="./img/info.svg"
+                style="margin-bottom: 2px; width: 16px;"
+                data-toggle="tooltip"
+                data-placement="right"
+                title="Generated modules are merely a guideline. Please refer to detailed course requirements for more info."
+              />
+
               <select
                 class="form-control"
                 id="courseSelect"
@@ -200,7 +235,9 @@
               Add module
             </button>
           </form>
-          <button class="btn btn-sm btn-success" id="btn-download">Save as .png</button>
+          <button class="btn btn-sm btn-success" id="btn-download">
+            Save as .png
+          </button>
         </div>
         <div class="col-md-4 ignore">
           <div class="card bottom bg-secondary border-light">
@@ -211,11 +248,11 @@
         </div>
       </div>
       <div class="row justify-content-center ignore" data-html2canvas-ignore>
-          <a
-            href="https://github.com/darrelhong/modplanner/blob/master/README.md#feedback"
-            style="color: rgb(53, 53, 53); font-weight: 300;"
-            >Give feedback!</a
-          >
+        <a
+          href="https://github.com/darrelhong/modplanner/blob/master/README.md#feedback"
+          style="color: rgb(53, 53, 53); font-weight: 300;"
+          >Give feedback!</a
+        >
       </div>
     </div>
     <script src="index.js"></script>
