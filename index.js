@@ -524,6 +524,8 @@ for (const key in coreModules) {
   }
   counter++;
 }
+
+// Initialise tooltip
 $( document ).ready(function() {
   $('#info').tooltip();
 });
