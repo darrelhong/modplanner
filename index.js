@@ -458,6 +458,55 @@ const coreModules = {
 
   'Business Administration (Accountancy)': ['DAO1704','DAO2702','BSP1707','BSP2701','ACC1701','BSP1702','MKT1705','MNO1706','FIN2704','DAO2703','MNO2706','BSP3701','ES2002'],
 
+  'Chemistry': ['CM1111','CM1121','CM1131','CM1191','MA1421','MA1102R','LSM1401','CM2101','CM2111','CM2121','CM2191','CM2192','CM3291','CM3292','RE3702','RE3703','RE3704','RE4701','RE4702','ES2007D','RE4711','RE4712'],
+
+  'Computational Biology': ['CS1010S','CS2040','CS1231','MA1100','LSM1106','MA1102R','CS2220','CM1401','LSM1102','MA1101R','SP1541','LSM2211','LSM2232','LSM2233','ST2334','MA3259','LSM3241'],
+
+  'Food Science and Technology': ['CM1501','CM1191','FST1101','FST1103','LSM1106','ST1232','FST2102B','FST2106','FST2107','FST2108','LSM2211','FST3101','FST3103','FST310','FST3106','FST3201','FST3202','FST3203','FST3288','DSC3202','CM3242','CM3267','FST4199','FST4199'],
+
+  'Data Science and Analytics': ['CS1010','DSA1101','MA1101R','MA1102R',' CS2040','DSA2101','DSA2102','MA2311','MA2104','ST2131','MA2216','ST2132','CS3244','DSA3101','DSA3102','ST3131','DSA4199','DSA4299'],
+
+  'Life Sciences': ['LSM1102','LSM1105','LSM1106','CM1401','ST1232','LSM2191'],
+
+  'Mathematics and Applied Mathematics': ['MA1100','MA1101R','MA1102R','CS1010','MA2101','MA2104','MA2108','MA2202','MA2216'],
+
+  'Physics': ['PC1141','PC1142','PC1143','PC1144','MA1101R','MA1102R','PC2130','PC2131','PC2134','PC2132','PC2193','PC2230','PC3130','PC3193'],
+
+  'Quantitative Finance': ['CS1010','ACC1701','MA1101R','MA1102R','FIN2704','MA2213','DSA2102','MA2216','MA2108','MA2104','QF3101','MA3269','ST3131','QF4199','QF4102','MA4269'],
+
+  'Statistics': ['ST1131','ST1232','MA1101R','MA1102R','CS1010','MA2216','ST2132','ST2137','MA2311','ST3131','ST3236','ST4199','ST4231','ST4233'],
+
+  'Architecture': ['AR1101', 'AR2224', 'AR3217', 'AR1102', 'AR2222', 'AR1328', 'AR2101', 'AR2221', 'AR3237', 'AR2101', 'AR2524', 'AR2723'],
+
+  'Industrial Design': ['ID1113','ID1223','ID1105','ID1322','ID1121 ','ID1106','ID2323 ','ID2111 ','ID2105','ID2116 ','ID2106','ID3105','ID3106','ID4121 ','ID4105','ID4106'],
+
+  'Project and Facilities Management': ['PF1101','PF1106','PF1107','PF1103','PF1108','PF2109','PF2107','PF2102','PF2108','PF2103','PF2110','PF3105','PF4102','PF4101'],
+
+  'Real Estate': ['RE1701','RE1702','RE1703','RE1704','RE1705','RE1706','RE2701','RE2702','RE2704','RE2705','RE2706','RE2707','RE2708','RE3701','RE3702','RE3703','RE3704','RE4701','RE4702','ES2007D','RE4711','RE4712'],
+
+  'Communications and New Media': ['FAS1101', 'FAS1102', 'NM1101E', 'NM2101', 'NM2103', 'NM2104', 'NM3550Y', 'NM4102'],
+
+  'Economics': ['FAS1101','FAS1102','EC2101','EC2102','EC2104','EC2303','EC3101','EC3102','EC3303','EC3304'],
+
+  'Geography': ['FAS1101','FAS1102','GE1101E','GE2101','GE2215','GE2227','GE3230A'],
+
+  'Political Science': ['FAS1101','FAS1102','PS3257','PS2249 ','PS2244','PS3249','PS3257'],
+
+  'Psychology': ['FAS1101','FAS1102','PL1101E','PL2131','PL2132','PL3232','PL3233','PL3234','PL3235','PL3236','PL3231','PL4201','PL4202','PL4880U'],
+  
+  'Social Work': ['FAS1101','FAS1102','PL1101E','PL2131','PL2132','PL3232','PL3233','PL3234','PL3235','PL3236','PL3231','PL4201','PL4202','PL4880U'],
+
+  'Sociology': ['FAS1101','FAS1102','SC1101E','SC2101','SC3101','SC4101','SC3209','SC3213','SC3221'],
+
+  'English Language': ['FAS1101','FAS1102','EL1101E','EL2101','EL2102','EL2111','EL2151'],
+
+  'English Literature': ['FAS1101','FAS1102','EN1101E','EN2201','EN2202','EN2203','EN2204','EN2205','EN2207'],
+
+  'Theatre Studies': ['FAS1101','FAS1102','TS1101E','TS3103'],
+
+  'History': ['FAS1101', 'FAS1102', 'HY1101E', 'HY2259'],
+
+  'Philosophy': ['FAS1101', 'FAS1102', 'GET1029', 'GET1028'],
 }
 
 // Generate core module options
@@ -467,7 +516,7 @@ for (const key in coreModules) {
   let option = document.createElement('option');
   option.text = key;
   courseSelect.add(option);
-  if (counter === 4 || counter === 12) {
+  if (counter === 4 || counter === 12 || counter === 14 || counter === 23 || counter === 27) {
     let blank = document.createElement('option');
     blank.text = '____________';
     courseSelect.add(blank);
