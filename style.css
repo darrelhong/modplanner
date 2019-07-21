@@ -190,3 +190,21 @@ strong {
 .tooltip.show {
   opacity: 0.7 !important;
 } 
+
+
+.popover-body {
+  color: white !important;
+}
+
+.popover-body a {
+  color: white;
+}
+
+.popover-body :hover {
+  color: rgb(110, 138, 173);
+}
+
+.popover{
+  background-color: rgba(0, 0, 0, 0.7) !important;
+  border: none !important;
+}

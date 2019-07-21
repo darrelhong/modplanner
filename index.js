@@ -241,7 +241,6 @@ function addToPosition(htmlText, position) {
   positionEl.insertBefore(el.firstChild, positionEl.firstChild);
 }
 
-
 function generateCourseCards(array) {
   array.forEach(mod => {
     getModData(mod)
@@ -517,7 +516,13 @@ for (const key in coreModules) {
   let option = document.createElement('option');
   option.text = key;
   courseSelect.add(option);
-  if (counter === 4 || counter === 12 || counter === 14 || counter === 23 || counter === 27) {
+  if (
+    counter === 4 ||
+    counter === 12 ||
+    counter === 14 ||
+    counter === 23 ||
+    counter === 27
+  ) {
     let blank = document.createElement('option');
     blank.text = '____________';
     courseSelect.add(blank);
@@ -526,6 +531,22 @@ for (const key in coreModules) {
 }
 
 // Initialise tooltip
-$( document ).ready(function() {
-  $('#info').tooltip();
+$(document).ready(function() {
+  $('#info')
+    .popover({ trigger: 'manual', html: true, animation: false })
+    .on('mouseenter', function() {
+      var _this = this;
+      $(this).popover('show');
+      $('.popover').on('mouseleave', function() {
+        $(_this).popover('hide');
+      });
+    })
+    .on('mouseleave', function() {
+      var _this = this;
+      setTimeout(function() {
+        if (!$('.popover:hover').length) {
+          $(_this).popover('hide');
+        }
+      }, 300);
+    });
 });
