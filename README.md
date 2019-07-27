@@ -42,6 +42,7 @@ Search for any module by module code or name and add to module list.
 
 ### Download as PNG
 ![enter image description here](https://media.giphy.com/media/fqsTHIG4aWf4oQKCh2/giphy.gif)
+
 Export completed module plan as png image.
 
 # UI/UX
