@@ -27,6 +27,7 @@ Draggable elements created using SortableJS API.
 
 ### Multi-year view
 ![enter image description here](https://media.giphy.com/media/cmxx6kOnOA7leOM5uP/giphy.gif)
+
 Collapsable multi-year view using Bootstrap.
 
 ### Prerequisite checking
