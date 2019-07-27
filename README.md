@@ -19,7 +19,7 @@ Visit [https://darrelhong.github.io/modplanner/](https://darrelhong.github.io/mo
 
 View commit history for detailed code history and updates.
 
-## Implemented features
+# Implemented features
 
 ## Intuitive drag & drop interface
 
