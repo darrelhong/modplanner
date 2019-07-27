@@ -32,7 +32,7 @@ Sortable.create(buffer, {
   ghostClass: 'ghost',
   onRemove: function(evt) {
     let moduleCode = evt.item.innerText.split(/\s/)[0];
-    sessionStorage.setItem(moduleCode, evt.to.id.substring(10));
+    localStorage.setItem(moduleCode, evt.to.id.substring(10));
   },
   onAdd: function(evt) {
     handleAddToBufferEvent(evt);
@@ -46,7 +46,7 @@ function handleAddEvent(evt) {
   if (fromID.match(/^\d+$/)) {
     removeModule(moduleCode, fromID);
   }
-  sessionStorage.setItem(moduleCode, toID);
+  localStorage.setItem(moduleCode, toID);
   activeModules[toID - 1].push(moduleCode);
   if (!prereq(moduleCode)) {
     evt.item.classList.add('error');
@@ -80,7 +80,7 @@ function handleAddToBufferEvent(evt) {
   let fromID = evt.from.id.substring(10);
   let moduleCode = evt.item.innerText.split(/\s/)[0];
   removeModule(moduleCode, fromID);
-  sessionStorage.setItem(moduleCode, 'b');
+  localStorage.setItem(moduleCode, 'b');
   console.log(activeModules);
   evt.item.classList.remove('error');
   console.log(activeModules);
@@ -107,7 +107,7 @@ function recheckAll() {
 
 function removeModule(moduleCode, id) {
   activeModules[id - 1].splice(activeModules[id - 1].indexOf(moduleCode), 1);
-  sessionStorage.removeItem(moduleCode);
+  localStorage.removeItem(moduleCode);
   console.log(activeModules);
 }
 
@@ -208,9 +208,9 @@ getSearchData().then(ml => {
 });
 
 async function persist() {
-  for (let i = 0; i < sessionStorage.length; i++) {
-    let moduleCode = sessionStorage.key(i);
-    let position = sessionStorage.getItem(sessionStorage.key(i));
+  for (let i = 0; i < localStorage.length; i++) {
+    let moduleCode = localStorage.key(i);
+    let position = localStorage.getItem(localStorage.key(i));
     await getModData(moduleCode)
       .then(data => {
         moduleObjs.set(data.moduleCode, data);
@@ -252,7 +252,7 @@ function generateCourseCards(array) {
         let color = getRandomItem(colors);
         let card = returnCard(data, color);
         addToBuffer(card);
-        sessionStorage.setItem(data.moduleCode, 'b');
+        localStorage.setItem(data.moduleCode, 'b');
       });
   });
 }
@@ -298,7 +298,7 @@ document.addEventListener('click', function(e) {
       let moduleCode = e.target.parentNode.parentNode.id;
       if (position === 'buffer') {
         e.target.parentNode.parentNode.remove();
-        sessionStorage.removeItem(moduleCode);
+        localStorage.removeItem(moduleCode);
       } else {
         let id = position.substring(10);
         let moduleCredit = moduleObjs.get(moduleCode).moduleCredit;
@@ -327,7 +327,7 @@ moduleForm.addEventListener('submit', function(e) {
         let color = getRandomItem(colors);
         let card = returnCard(data, color);
         addToBufferTop(card);
-        sessionStorage.setItem(data.moduleCode, 'b');
+        localStorage.setItem(data.moduleCode, 'b');
         document.querySelector('#module-code').value = '';
         document.querySelector('#buffer').scrollTo({
           top: 0,
