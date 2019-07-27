@@ -187,11 +187,6 @@ strong {
   );
 }
 
-.tooltip.show {
-  opacity: 0.7 !important;
-} 
-
-
 .popover-body {
   color: white !important;
 }

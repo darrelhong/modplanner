@@ -530,7 +530,7 @@ for (const key in coreModules) {
   counter++;
 }
 
-// Initialise tooltip
+// Initialise popover
 $(document).ready(function() {
   $('#info')
     .popover({ trigger: 'manual', html: true, animation: false })
@@ -550,3 +550,8 @@ $(document).ready(function() {
       }, 300);
     });
 });
+
+//Initialise tooltip
+$(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+})
