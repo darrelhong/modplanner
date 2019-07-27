@@ -21,27 +21,27 @@ View commit history for detailed code history and updates.
 
 ## Implemented features
 
-### Intuitive drag & drop interface
+## Intuitive drag & drop interface
 
 Draggable elements created using SortableJS API.
 
-### Multi-year view
+## Multi-year view
 ![enter image description here](https://media.giphy.com/media/cmxx6kOnOA7leOM5uP/giphy.gif)
 
 Collapsable multi-year view using Bootstrap.
 
-### Prerequisite checking
+## Prerequisite checking
 ![enter image description here](https://media.giphy.com/media/Qtw042ro3fLaj3pNrg/giphy.gif)
 
 Uses NUSMods API to fetch module data which contains prerequisite tree/fulfilled requirements. Some modules have AND/OR conditions which our current algorithm does not support.
 
-### Core module generation
+## Core module generation
 Select your course of study to generate a list of your core modules.
 
-### Autocomplete module search function
+## Autocomplete module search function
 Search for any module by module code or name and add to module list.
 
-### Download as PNG
+## Download as PNG
 ![enter image description here](https://media.giphy.com/media/fqsTHIG4aWf4oQKCh2/giphy.gif)
 
 Export completed module plan as png image.
